@@ -7,6 +7,9 @@ if has('vim_starting')
   set ttyfast
 endif
 
+set synmaxcol=128
+syntax sync minlines=256
+
 let neobundle_readme=expand('~/.config/nvim/bundle/neobundle.vim/README.md')
 
 let g:vim_bootstrap_langs = "elixir,elm,html,javascript,ruby"
@@ -36,6 +39,7 @@ NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'chrisbra/csv.vim'
 " NeoBundle 'vim-scripts/grep.vim'
 " NeoBundle 'vim-scripts/CSApprox' " Makes GVim colorschemes to work with
 " terminal vim
@@ -455,15 +459,6 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-" ripgrep
-" if executable('rg')
-"   let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-"   set grepprg=rg\ --vimgrep
-"   command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-" endif
-
-" cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR> What is this?
-
 " Dispatch and Zeus
 let g:rspec_command = "Dispatch zeus rspec {spec}"
 
@@ -607,7 +602,7 @@ vnoremap <leader>rriv :RRenameInstanceVariable<cr>
 vnoremap <leader>rem  :RExtractMethod<cr>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+nnoremap <silent> <C-c> :nohl<CR><C-l>
 
 
 "*****************************************************************************

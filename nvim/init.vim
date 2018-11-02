@@ -34,6 +34,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'junegunn/fzf.vim'
+NeoBundle 'mileszs/ack.vim'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-fugitive'
@@ -50,14 +52,15 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'numkil/ag.nvim'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'honza/vim-snippets'
+"NeoBundle 'numkil/ag.nvim'
+"NeoBundle 'SirVer/ultisnips'
+"NeoBundle 'honza/vim-snippets'
 NeoBundle 'w0rp/ale'
 NeoBundle 'ngmy/vim-rubocop'
 NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'janko-m/vim-test'
 NeoBundle 'ap/vim-buftabline'
+NeoBundle 'lmeijvogel/vim-yaml-helper'
 let g:gutentags_cache_dir = '~/.tags_cache'
 
 "" Color
@@ -80,7 +83,6 @@ NeoBundle 'tpope/vim-projectionist' " must be after phoenix.vim plugin
 "" Elm Bundle
 NeoBundle 'elmcast/elm-vim'
 
-
 " html
 "" HTML Bundle
 NeoBundle 'hail2u/vim-css3-syntax'
@@ -88,12 +90,10 @@ NeoBundle 'ap/vim-css-color'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'mattn/emmet-vim'
 
-
 " javascript
 "" Javascript Bundle
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'prettier/vim-prettier', { 'do': 'yarn install' }
-
 
 " ruby
 NeoBundle 'tpope/vim-rails'
@@ -102,27 +102,12 @@ NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'radenling/vim-dispatch-neovim'
 NeoBundle 'ecomba/vim-ruby-refactoring'
 
-
 call neobundle#end()
 
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 "End NeoBundle Scripts-------------------------
-" vim-bootstrap 3340bde
-
-"*****************************************************************************
-"" Vim-PLug core
-"*****************************************************************************
-
-
-
-
-"*****************************************************************************
-"" NeoBundle install packages
-"*****************************************************************************
-
-
 
 " Required:
 filetype plugin indent on
@@ -216,9 +201,7 @@ else
   let g:indentLine_concealcursor = 0
   let g:indentLine_char = '┆'
   let g:indentLine_faster = 1
-
 endif
-
 
 
 "" Disable the blinking cursor.
@@ -240,6 +223,8 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 " Silver searcher
 if executable('ag')
+  " use ag for ack
+  let g:ackprg = 'ag --vimgrep'
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
 
@@ -250,11 +235,12 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
+"nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+"nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
+nmap K :Ack! "\b<cword>\b" <CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -451,13 +437,21 @@ noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 "" fzf.vim
 set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+
+nmap ; :Buffers<CR>
+nmap <Leader>f :Files<CR>
+nmap <Leader>r :Tags<CR>
+
+let g:fzf_buffers_jump = 1
 
 " The Silver Searcher
 if executable('ag')
   let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
   set grepprg=ag\ --nogroup\ --nocolor
 endif
+
+" Ack
+
 
 " Dispatch and Zeus
 let g:rspec_command = "Dispatch zeus rspec {spec}"
@@ -577,18 +571,8 @@ map <Leader>s :TestNearest<CR>
 map <Leader>l :TestLast<CR>
 map <Leader>a :TestSuite<CR>
 
-" vim-test mappings
-nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " run test in split window
 let test#strategy = "dispatch"
-
-
-" For ruby refactory
-if has('nvim')
-  runtime! macros/matchit.vim
-else
-  packadd! matchit
-endif
 
 " Ruby refactory
 nnoremap <leader>rap  :RAddParameter<cr>
@@ -634,6 +618,7 @@ nmap <F8> :TagbarToggle<CR>
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
   tnoremap <C-v><Esc> <Esc>
+
   " Moving between terminal and regular windows
   tnoremap <C-h> <C-\><C-n><C-w>h
   tnoremap <C-j> <C-\><C-n><C-w>j
@@ -673,9 +658,9 @@ let g:python3_host_skip_check=1
 let g:python3_host_prog = '/usr/local/Cellar/python3/3.6.0/bin/python3'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+"" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"

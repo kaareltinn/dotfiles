@@ -33,18 +33,14 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " ------------------------------------
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'junegunn/fzf.vim'
+NeoBundle 'fszymanski/fzf-quickfix'
 NeoBundle 'mileszs/ack.vim'
-NeoBundle 'jistr/vim-nerdtree-tabs'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'chrisbra/csv.vim'
-" NeoBundle 'vim-scripts/grep.vim'
-" NeoBundle 'vim-scripts/CSApprox' " Makes GVim colorschemes to work with
-" terminal vim
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'majutsushi/tagbar'
@@ -52,15 +48,17 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'kien/ctrlp.vim'
-"NeoBundle 'numkil/ag.nvim'
-"NeoBundle 'SirVer/ultisnips'
-"NeoBundle 'honza/vim-snippets'
 NeoBundle 'w0rp/ale'
 NeoBundle 'ngmy/vim-rubocop'
 NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'janko-m/vim-test'
 NeoBundle 'ap/vim-buftabline'
 NeoBundle 'lmeijvogel/vim-yaml-helper'
+NeoBundle 'epilande/vim-es2015-snippets'
+NeoBundle 'epilande/vim-react-snippets'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+
 let g:gutentags_cache_dir = '~/.tags_cache'
 
 "" Color
@@ -74,9 +72,8 @@ NeoBundle 'arcticicestudio/nord-vim'
 " elixir
 NeoBundle 'elixir-lang/vim-elixir'
 NeoBundle 'mhinz/vim-mix-format'
-NeoBundle 'carlosgaldino/elixir-snippets'
-NeoBundle 'slashmili/alchemist.vim'
-NeoBundle "c-brenn/phoenix.vim"
+" NeoBundle 'carlosgaldino/elixir-snippets'
+" NeoBundle "c-brenn/phoenix.vim"
 NeoBundle 'tpope/vim-projectionist' " must be after phoenix.vim plugin
 
 " elm
@@ -92,8 +89,15 @@ NeoBundle 'mattn/emmet-vim'
 
 " javascript
 "" Javascript Bundle
-NeoBundle 'jelera/vim-javascript-syntax'
+" NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
 NeoBundle 'prettier/vim-prettier', { 'do': 'yarn install' }
+
+" Typescript
+NeoBundle 'HerringtonDarkholme/yats.vim'
+NeoBundle 'peitalin/vim-jsx-typescript'
+NeoBundle 'mhartington/nvim-typescript', {'build': './install.sh'}
 
 " ruby
 NeoBundle 'tpope/vim-rails'
@@ -111,7 +115,6 @@ NeoBundleCheck
 
 " Required:
 filetype plugin indent on
-
 
 "*****************************************************************************
 "" Basic Setup
@@ -158,12 +161,6 @@ else
     set shell=/bin/sh
 endif
 
-" session management
-let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
-let g:session_command_aliases = 1
-
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -175,17 +172,13 @@ set t_Co=256
 " set termguicolors
 
 let no_buffers_menu=1
-if !exists('g:not_finish_vimplug')
-  colorscheme nord
-  " nord
-  let g:nord_comment_brightness = 15
-  let g:nord_uniform_status_lines = 1
-  let g:nord_uniform_diff_background = 1
-endif
-
+colorscheme nord
+" nord
+let g:nord_comment_brightness = 15
+let g:nord_uniform_status_lines = 1
+let g:nord_uniform_diff_background = 1
 
 set mousemodel=popup
-set guioptions=egmrti
 set gfn=Fira\ Code:h12
 
 if has("gui_running")
@@ -194,15 +187,12 @@ if has("gui_running")
     set transparency=7
   endif
 else
-"  let g:CSApprox_loaded = 1
-
   " IndentLine
   let g:indentLine_enabled = 1
   let g:indentLine_concealcursor = 0
-  let g:indentLine_char = '┆'
+  let g:indentLine_char = '|'
   let g:indentLine_faster = 1
 endif
-
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -235,20 +225,15 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 " bind K to grep word under cursor
-"nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-"nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap \ :Ag<SPACE>
-nmap K :Ack! "\b<cword>\b" <CR>
+nnoremap \ :Ack<SPACE>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-map <leader>q :NERDTreeToggle<CR>
-map <leader>m :NERDTreeFind<CR>
 
 " Ctrl-p
 nnoremap <Leader>b :CtrlPBuffer<CR>
@@ -316,6 +301,11 @@ let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
@@ -335,15 +325,11 @@ cnoreabbrev Qall qall
 let g:NERDTreeChDirMode=2
 let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
 let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeMinimalUI=1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
-" vimshell.vim
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt =  '$ '
+map <leader>q :NERDTreeToggle<CR>
+map <leader>m :NERDTreeFind<CR>
 
 " terminal emulation
 if g:vim_bootstrap_editor == 'nvim'
@@ -366,12 +352,6 @@ endif
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-" augroup vimrc-sync-fromstart
-"   autocmd!
-"   autocmd BufEnter * :syntax sync maxlines=200
-" augroup END
-
 "" Remember cursor position
 augroup vimrc-remember-cursor-position
   autocmd!
@@ -413,13 +393,6 @@ noremap <Leader>gr :Gremove<CR>
 "" Open current line on GitHub
 nnoremap <Leader>o :.Gbrowse<CR>
 
-
-" session management
-nnoremap <leader>so :OpenSession<Space>
-nnoremap <leader>ss :SaveSession<Space>
-nnoremap <leader>sd :DeleteSession<CR>
-nnoremap <leader>sc :CloseSession<CR>
-
 "" Tabs
 nnoremap <Tab> gt
 nnoremap <S-Tab> gT
@@ -439,7 +412,7 @@ set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 
 nmap ; :Buffers<CR>
-nmap <Leader>f :Files<CR>
+nmap <Leader>fs :Files<CR>
 nmap <Leader>r :Tags<CR>
 
 let g:fzf_buffers_jump = 1
@@ -449,12 +422,6 @@ if executable('ag')
   let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
   set grepprg=ag\ --nogroup\ --nocolor
 endif
-
-" Ack
-
-
-" Dispatch and Zeus
-let g:rspec_command = "Dispatch zeus rspec {spec}"
 
 " Tagbar
 nmap <silent> <F4> :TagbarToggle<CR>
@@ -513,6 +480,7 @@ vnoremap K :m '<-2<CR>gv=gv
 let g:mix_format_on_save = 0
 let g:mix_format_silent_errors = 1
 let g:mix_format_elixir_bin_path = '/Users/kaareltinn/.asdf/installs/elixir/1.6/bin'
+let g:ale_elixir_elixir_ls_release = '/Users/kaareltinn/Projects/elixir-ls'
 
 " elm
 " elm-vim
@@ -547,6 +515,9 @@ augroup vimrc-javascript
   autocmd FileType javascript set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
 augroup END
 
+" set filetypes as typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+
 augroup vimrc-ruby
   autocmd!
   autocmd BufNewFile,BufRead *.rb,*.rbw,*.gemspec setlocal filetype=ruby
@@ -565,12 +536,15 @@ let g:tagbar_type_ruby = {
     \ ]
 \ }
 
-" RSpec.vim mappings
+" vim-test mappings
 map <Leader>t :TestFile<CR>
 map <Leader>s :TestNearest<CR>
 map <Leader>l :TestLast<CR>
 map <Leader>a :TestSuite<CR>
 
+" Dispatch and Zeus
+"let g:rspec_command = "Dispatch zeus rspec {spec}"
+"
 " run test in split window
 let test#strategy = "dispatch"
 
@@ -585,17 +559,8 @@ vnoremap <leader>rrlv :RRenameLocalVariable<cr>
 vnoremap <leader>rriv :RRenameInstanceVariable<cr>
 vnoremap <leader>rem  :RExtractMethod<cr>
 
-" <Ctrl-l> redraws the screen and removes any search highlighting.
+" <Ctrl-c> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-c> :nohl<CR><C-l>
-
-
-"*****************************************************************************
-"*****************************************************************************
-
-"" Include user's local vim config
-if filereadable(expand("~/.config/nvim/local_init.vim"))
-  source ~/.config/nvim/local_init.vim
-endif
 
 "*****************************************************************************
 "" Convenience variables
@@ -608,9 +573,6 @@ let g:deoplete#enable_at_startup = 1
 " deoplete tab-complete
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-
-" toggle tagbar
-nmap <F8> :TagbarToggle<CR>
 
 "*****************************************************************************
 "" Terminal emulator
@@ -651,16 +613,14 @@ autocmd User ProjectionistDetect
 \    }
 \ })
 
-let g:loaded_python_provider = 1
-let g:python_host_skip_check=1
-let g:python_host_prog = '/usr/local/bin/python2'
-let g:python3_host_skip_check=1
-let g:python3_host_prog = '/usr/local/Cellar/python3/3.6.0/bin/python3'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-"
-"" If you want :UltiSnipsEdit to split your window.
-"let g:UltiSnipsEditSplit="vertical"
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+	\      'extends' : 'jsx',
+	\  },
+\  'javascript.js' : {
+	\			 'extends' : 'js',
+	\	 },
+\  'javascript.tsx' : {
+	\			 'extends' : 'tsx',
+	\	 },
+\}

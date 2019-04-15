@@ -38,6 +38,7 @@ NeoBundle 'fszymanski/fzf-quickfix'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-surround'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'chrisbra/csv.vim'
@@ -238,6 +239,9 @@ nnoremap N Nzzzv
 " Ctrl-p
 nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader>ff :CtrlPMRUFiles<CR>
+
+" Jump-to-definition for Typescript types
+nnoremap <Leader>ts :TSDef "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
@@ -565,9 +569,6 @@ nnoremap <silent> <C-c> :nohl<CR><C-l>
 "*****************************************************************************
 "" Convenience variables
 "*****************************************************************************
-
-let g:ycm_key_list_select_completion=["<C-j>"]
-let g:ycm_key_list_previous_completion=["<C-k>"]
 
 let g:deoplete#enable_at_startup = 1
 " deoplete tab-complete

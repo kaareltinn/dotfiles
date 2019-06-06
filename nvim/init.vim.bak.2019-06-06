@@ -51,6 +51,7 @@ NeoBundle 'christoomey/vim-tmux-navigator'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'w0rp/ale'
 NeoBundle 'ngmy/vim-rubocop'
+NeoBundle 'ludovicchabant/vim-gutentags'
 NeoBundle 'janko-m/vim-test'
 NeoBundle 'ap/vim-buftabline'
 NeoBundle 'lmeijvogel/vim-yaml-helper'
@@ -58,8 +59,8 @@ NeoBundle 'epilande/vim-es2015-snippets'
 NeoBundle 'epilande/vim-react-snippets'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
-NeoBundle 'machakann/vim-swap'
 
+let g:gutentags_cache_dir = '~/.tags_cache'
 
 "" Color
 NeoBundle 'tomasr/molokai'

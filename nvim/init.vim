@@ -475,6 +475,11 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
+" Delete mappings without overriding unnamed buffer
+nnoremap s "_d
+nnoremap ss "_dd
+nnoremap S "_D
+
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************

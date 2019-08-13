@@ -48,3 +48,4 @@ windows:
   - server: rails s
   - zeus: zeus start
   - webpack: yarn && yarn build && yarn start
+  - docker: docker-compose up -d postgres redis

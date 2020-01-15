@@ -60,6 +60,7 @@ NeoBundle 'joaohkfaria/vim-jest-snippets'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'machakann/vim-swap'
+NeoBundle 'aserebryakov/vim-todo-lists'
 
 
 "" Color
@@ -162,6 +163,9 @@ else
     set shell=/bin/sh
 endif
 
+set splitbelow
+set splitright
+
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -241,7 +245,9 @@ nnoremap <Leader>b :CtrlPBuffer<CR>
 nnoremap <Leader>ff :CtrlPMRUFiles<CR>
 
 " Jump-to-definition for Typescript types
-nnoremap <Leader>ts :TSDef "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <Leader>tj :TSDef "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <Leader>tr :TSRefs "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <Leader>tt :TSType "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 if exists("*fugitive#statusline")
   set statusline+=%{fugitive#statusline()}
@@ -306,6 +312,7 @@ highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
 " UltiSnips
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -616,7 +623,25 @@ autocmd User ProjectionistDetect
 \    },
 \    'test/*_test.exs': {
 \      'alternate': 'lib/{}.ex'
-\    }
+\    },
+\    'app/*.ts': {
+\      'alternate': 'app/{}.test.js'
+\    },
+\    'app/*.test.js': {
+\      'alternate': 'app/{}.ts'
+\    },
+\    'app/*.js': {
+\      'alternate': 'app/{}.test.js'
+\    },
+\    'app/*.test.jsx': {
+\      'alternate': 'app/{}.tsx'
+\    },
+\    'app/*.tsx': {
+\      'alternate': 'app/{}.test.jsx'
+\    },
+\    'app/*.jsx': {
+\      'alternate': 'app/{}.test.jsx'
+\    },
 \ })
 
 let g:user_emmet_settings = {

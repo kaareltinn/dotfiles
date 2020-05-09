@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/kaareltinn/.gitignore
+	excludesfile = /Users/kaareltinn/.gitignore_global
 [user]
 	name = Kaarel Tinn
 	email = kaareltinn@hotmail.com

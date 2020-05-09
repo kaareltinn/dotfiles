@@ -559,7 +559,7 @@ map <Leader>l :TestLast<CR>
 map <Leader>a :TestSuite<CR>
 
 " Dispatch and Zeus
-"let g:rspec_command = "Dispatch zeus rspec {spec}"
+" let g:rspec_command = "rspec {spec}"
 "
 " run test in split window
 let test#strategy = "dispatch"

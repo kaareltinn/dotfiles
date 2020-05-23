@@ -42,6 +42,9 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-dispatch'
 Plug 'radenling/vim-dispatch-neovim'
 
+" Elixir
+Plug 'elixir-editors/vim-elixir'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
@@ -49,6 +52,7 @@ call plug#end()
 " Coc
 let g:coc_global_extensions = [
   \ 'coc-tsserver',
+  \ 'coc-elixir',
   \ 'coc-lists'
   \ ]
 if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')

@@ -46,6 +46,5 @@ windows:
   - editor: vim .
   - terminal: git pull
   - server: rails s
-  - zeus: zeus start
   - webpack: yarn && yarn build && yarn start
-  - docker: docker-compose up -d postgres redis
+  - docker: docker-compose up -d postgres redis elasticsearch

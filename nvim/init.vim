@@ -357,6 +357,17 @@ nmap <leader>rn <Plug>(coc-rename)
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
+" Enable CursorLine
+set cursorline
+
+" Default Colors for CursorLine
+highlight  CursorLine ctermbg=None ctermfg=None
+
+" Change Color when entering Insert Mode
+autocmd InsertEnter * highlight  CursorLine ctermbg=DarkGrey ctermfg=None
+
+" Revert Color to default when leaving Insert Mode
+autocmd InsertLeave * highlight  CursorLine ctermbg=None ctermfg=None
 "" +------------- LANGUAGES ---------------+
 " html
 " for html files, 2 spaces

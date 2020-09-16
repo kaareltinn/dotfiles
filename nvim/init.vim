@@ -82,7 +82,19 @@ let g:lightline = {
 \   'left': [['mode', 'paste'], ['filename', 'modified']],
 \   'right': [['lineinfo'], ['percent']]
 \ },
+\ 'component_function': {
+\   'filename': 'LightlineFilename',
 \ }
+\ }
+
+function! LightlineFilename()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
 
 " The Silver Searcher
 if executable('ag')

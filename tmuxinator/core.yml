@@ -1,7 +1,7 @@
 # /Users/kaareltinn/.config/tmuxinator/core.yml
 
 name: core
-root: ~/Projects/eagronom/core
+root: ~/eAgronom/core
 
 # Optional tmux socket
 # socket_name: foo
@@ -47,4 +47,6 @@ windows:
   - terminal: git pull
   - server: rails s
   - webpack: yarn && yarn build && yarn start
+  - guard: bundle exec guard
+  - watch: yarn test --watch
   - docker: docker-compose up -d postgres redis elasticsearch

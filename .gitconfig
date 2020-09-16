@@ -1,5 +1,6 @@
 [core]
 	excludesfile = /Users/kaareltinn/.gitignore_global
+  pager = delta
 [user]
 	name = Kaarel Tinn
 	email = kaareltinn@hotmail.com
@@ -24,3 +25,10 @@
   recent-branches="for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/"
 [pull]
   # rebase = true
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  side-by-side = true
+  syntax-theme = Nord

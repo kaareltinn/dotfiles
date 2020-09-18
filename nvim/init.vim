@@ -83,10 +83,11 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let g:lightline = {
 \ 'colorscheme': 'nord',
 \ 'active': {
-\   'left': [['mode', 'paste'], ['filename', 'modified']],
+\   'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'filename', 'modified']],
 \   'right': [['lineinfo'], ['percent']]
 \ },
 \ 'component_function': {
+\   'gitbranch': 'FugitiveHead',
 \   'filename': 'LightlineFilename',
 \ }
 \ }

@@ -1,0 +1,87 @@
+snippet cstse "createStructuredSelector"
+export default connect(
+	createStructuredSelector({
+		${0:${VISUAL}}: ${2:${VISUAL}},
+	})
+)(YourComponent)
+endsnippet
+
+snippet csta "createStandardAction"
+export const $1 = createStandardAction('$2')<$3>()
+endsnippet
+
+snippet impcsta "import createStandardAction"
+import { createStandardAction } from 'typesafe-actions'
+endsnippet
+
+snippet thkact "ThunkAction"
+export const $1: ThunkAction<$3> = async(dispatch, getState) => {
+	$2
+}
+endsnippet
+
+snippet impthkact "import ThunkAction"
+import { ThunkAction } from 'src/lib/redux-thunk'
+endsnippet
+
+snippet imp18n "import I18n"
+import I18n from 'src/lib/i18n'
+endsnippet
+
+snippet impcrre "import createReduxer"
+import { createReducer } from 'typesafe-actions'
+endsnippet
+
+snippet crre "createReduxer"
+export const $1 = createReducer<$3>($4)
+	.handleAction(actions.$2, (state, action) => action.payload)
+endsnippet
+
+snippet rrcc "React Redux Class Component"
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
+
+type Props = {
+}
+
+class $1 extends PureComponent<Props> {
+  render = () => (
+  )
+}
+
+export default connect(
+  createStructuredSelector({}),
+  {}
+)($1)
+endsnippet
+
+snippet gvn "given"
+given('$1', () => $2)
+endsnippet
+
+snippet gvnsub "given"
+given('subject', () => $1)
+endsnippet
+
+snippet rct "React Component Test"
+import React from 'react'
+import { shallow } from 'enzyme'
+
+import { $1 } from 'src//$1'
+
+describe('<$1 />', () => {
+  given('component', () => shallow(<$1 {...given.props} />))
+  given('props', () => ({}))
+
+  it('renders', () => {
+    expect(given.component).toMatchSnapshot()
+  })
+})
+endsnippet
+
+snippet rencompsnap "Component snapshot render test"
+it('renders', () => {
+  expect(given.component).toMatchSnapshot()
+})
+endsnippet

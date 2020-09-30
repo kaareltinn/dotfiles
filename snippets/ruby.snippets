@@ -1,0 +1,28 @@
+snippet bp
+binding.pry
+endsnippet
+
+snippet rrspc
+require 'rails_helper'
+
+RSpec.describe ${1:SomeClass} do
+	let(:company) { TestFactory.create_company }
+
+	describe '' do
+	end
+end
+endsnippet
+
+snippet nform
+class ${0:SomeClass}
+	inlude NestedForm
+
+	values do
+		attribute ${1}, ${2}
+	end
+end
+endsnippet
+
+snippet fatr
+attribute ${0}, ${1}
+endsnippet

@@ -56,6 +56,18 @@ export default connect(
 )($1)
 endsnippet
 
+snippet rcc "React Class Component"
+import React, { PureComponent } from 'react'
+
+type Props = {
+}
+
+export default class $1 extends PureComponent<Props> {
+  render = () => (
+  )
+}
+endsnippet
+
 snippet gvn "given"
 given('$1', () => $2)
 endsnippet

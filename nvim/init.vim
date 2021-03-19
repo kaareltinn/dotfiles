@@ -37,7 +37,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 
 " Ruby
-Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-dispatch'
 Plug 'radenling/vim-dispatch-neovim'
@@ -117,6 +117,15 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 autocmd User ProjectionistDetect
 \ call projectionist#append(getcwd(),
 \ {
+\    'app/*.rb': {
+\      'alternate': 'spec/{}_spec.rb'
+\    },
+\    'spec/*_spec.rb': {
+\      'alternate': ['app/{}.rb', 'app/components/{}.rb']
+\    },
+\    'app/components/*.rb': {
+\      'alternate': 'spec/{dirname}/{basename}_spec.rb'
+\    },
 \    'lib/*.ex': {
 \      'alternate': 'test/{}_test.exs'
 \    },
@@ -239,6 +248,7 @@ map <leader>m :NERDTreeFind<CR>
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
+" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap \ :Ag<SPACE>
 
 " Search mappings: These will make it so that going to the next one in a

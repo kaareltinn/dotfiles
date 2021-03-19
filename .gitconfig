@@ -32,3 +32,5 @@
 [delta]
   side-by-side = true
   syntax-theme = Nord
+[cola]
+	spellcheck = false

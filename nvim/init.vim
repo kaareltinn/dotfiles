@@ -23,6 +23,7 @@ Plug 'SirVer/ultisnips'
 Plug 'w0rp/ale'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-projectionist' " must be after phoenix.vim plugin
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " HTML
 Plug 'hail2u/vim-css3-syntax'
@@ -44,6 +45,9 @@ Plug 'radenling/vim-dispatch-neovim'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
+
+" PureScript
+Plug 'purescript-contrib/purescript-vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -377,7 +381,6 @@ nnoremap <silent> <space>f :<C-u>CocList mru<cr>
 nmap <leader>do <Plug>(coc-codeaction)
 nmap <leader>rn <Plug>(coc-rename)
 
-
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
@@ -400,6 +403,9 @@ autocmd Filetype html setlocal ts=2 sw=2 expandtab
 " set filetypes as typescript.tsx
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+
+" For coc-settings.json
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " vim-javascript
 augroup vimrc-javascript

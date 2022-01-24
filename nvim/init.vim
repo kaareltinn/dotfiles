@@ -50,6 +50,9 @@ Plug 'elixir-editors/vim-elixir'
 " PureScript
 Plug 'purescript-contrib/purescript-vim'
 
+" Solidity
+Plug 'tomlion/vim-solidity'
+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
@@ -248,6 +251,9 @@ endif
 map <leader>q :NERDTreeToggle<CR>
 map <leader>m :NERDTreeFind<CR>
 
+" Replace without overriding contents of current
+xnoremap <leader>p "_dP
+
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -324,7 +330,8 @@ map <Leader>l :TestLast<CR>
 map <Leader>a :TestSuite<CR>
 "
 " run test in split window
-let test#strategy = "dispatch"
+let test#strategy = "neovim"
+let test#neovim#term_position = "20"
 
 " Ruby refactory
 nnoremap <leader>rap  :RAddParameter<cr>
@@ -343,6 +350,9 @@ nnoremap <silent> <C-c> :nohl<CR><C-l>
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
   tnoremap <C-v><Esc> <Esc>
+
+  " In vim-test 'neovim' strategy press Ctrl-o to go to normal mode and scroll
+  tmap <C-o> <C-\><C-n>
 
   " Moving between terminal and regular windows
   tnoremap <C-h> <C-\><C-n><C-w>h

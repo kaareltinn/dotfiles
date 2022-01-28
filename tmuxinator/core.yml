@@ -1,7 +1,7 @@
 # /Users/kaareltinn/.config/tmuxinator/core.yml
 
 name: core
-root: ~/eAgronom/core
+root: ~/eagronom/core
 
 # Optional tmux socket
 # socket_name: foo
@@ -43,9 +43,9 @@ root: ~/eAgronom/core
 # post: tmux -CC attach -t core
 
 windows:
-  - editor: vim .
+  - editor: nvim .
   - terminal: git pull
-  - server: rails s
+  - server: bundle exec rails s
   - webpack: yarn && yarn build && yarn start
   - guard: bundle exec guard
   - watch: yarn test --watch

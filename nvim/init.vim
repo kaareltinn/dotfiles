@@ -57,6 +57,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 
+let g:python_host_porog = '/usr/bin/python2'
+let g:python3_host_prog = '/Users/kaareltinn/.asdf/shims/python3'
+
 " Coc
 let g:coc_global_extensions = [
   \ 'coc-tsserver',

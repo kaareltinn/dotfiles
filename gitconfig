@@ -1,0 +1,36 @@
+[core]
+	excludesfile = /Users/kaareltinn/.gitignore_global
+  pager = delta
+[user]
+	name = Kaarel Tinn
+	email = kaareltinn@hotmail.com
+[push]
+	default = simple
+
+
+[alias]
+  co = checkout
+  st = status
+  df = diff --stat -p --no-prefix
+  view = log --stat -b -p --no-prefix
+  hist = log --graph --oneline --decorate
+  ra = log --graph --abbrev-commit --date=relative --all
+  mine = "!git log --author='Kaarel Tinn' --format='%h %ad %s'"
+  mine-by-day = "!git-mine-by-day"
+  untracked = ls-files --others --exclude-standard
+  edit-modified = "!f() { git ls-files --modified --exclude-standard | sort -u ;  }; nvim `f`"
+  fix = commit --amend --no-edit
+	plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
+  blast = "branch --sort=comitterdate"
+  recent-branches="for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/"
+[pull]
+  # rebase = true
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  side-by-side = true
+  syntax-theme = Nord
+[cola]
+	spellcheck = false

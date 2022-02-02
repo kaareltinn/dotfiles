@@ -258,7 +258,7 @@ map <leader>m :NERDTreeFind<CR>
 xnoremap <leader>p "_dP
 
 " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap K :Ag <C-R><C-W><CR>
 nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
 " command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
@@ -289,16 +289,16 @@ noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
 
 "" Git
-noremap <Leader>ga :Gwrite<CR>
-noremap <Leader>gc :Gcommit<CR>
-noremap <Leader>gsh :Gpush<CR>
-noremap <Leader>gll :Gpull<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
+noremap <Leader>ga :G write<CR>
+noremap <Leader>gc :G commit<CR>
+noremap <Leader>gsh :G push<CR>
+noremap <Leader>gll :G pull<CR>
+noremap <Leader>gs :G status<CR>
+noremap <Leader>gb :G blame<CR>
+noremap <Leader>gd :G diff<CR>
+noremap <Leader>gr :G remove<CR>
 "" Open current line on GitHub
-nnoremap <Leader>o :.Gbrowse<CR>
+nnoremap <Leader>o :GBrowse<CR>
 
 "" Tabs
 nnoremap <Tab> gt

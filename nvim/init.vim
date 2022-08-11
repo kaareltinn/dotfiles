@@ -46,6 +46,7 @@ Plug 'radenling/vim-dispatch-neovim'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
+Plug 'mhinz/vim-mix-format'
 
 " PureScript
 Plug 'purescript-contrib/purescript-vim'
@@ -429,6 +430,9 @@ augroup vimrc-ruby
   autocmd BufNewFile,BufRead *.xlsx.axlsx set filetype=ruby
   autocmd FileType ruby set tabstop=2|set shiftwidth=2|set expandtab softtabstop=2
 augroup END
+
+" vim-mix-format
+let g:mix_format_on_save = 1
 
 lua << EOF
 require'lspconfig'.solargraph.setup{}

@@ -415,6 +415,10 @@ autocmd Filetype html setlocal ts=2 sw=2 expandtab
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 
+" YML filetype
+au! BufNewFile,BufRead *.yaml.envsubst set filetype=yaml
+au! BufNewFile,BufRead *.yml.envsubst set filetype=yaml
+
 " For coc-settings.json
 autocmd FileType json syntax match Comment +\/\/.\+$+
 

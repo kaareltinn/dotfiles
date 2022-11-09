@@ -6,7 +6,8 @@ snippet rrspc
 require 'rails_helper'
 
 RSpec.describe ${1:SomeClass} do
-	let(:company) { TestFactory.create_company }
+	let(:company) { create(:company) }
+	let(:company_user) { build_company_user(company) }
 
 	describe '' do
 	end

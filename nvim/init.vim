@@ -3,8 +3,6 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'arcticicestudio/nord-vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'
 Plug 'lmeijvogel/vim-yaml-helper'
@@ -24,7 +22,11 @@ Plug 'w0rp/ale'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-projectionist' " must be after phoenix.vim plugin
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'github/copilot.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Exafunction/codeium.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " HTML
 Plug 'hail2u/vim-css3-syntax'
@@ -217,10 +219,10 @@ set number
 set t_Co=256
 
 " IndentLine
-let g:indentLine_enabled = 1
-let g:indentLine_concealcursor = 0
-let g:indentLine_char = '|'
-let g:indentLine_faster = 1
+" let g:indentLine_enabled = 1
+" let g:indentLine_concealcursor = 0
+" let g:indentLine_char = '|'
+" let g:indentLine_faster = 1
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
@@ -258,7 +260,8 @@ map <leader>m :NERDTreeFind<CR>
 xnoremap <leader>p "_dP
 
 " bind K to grep word under cursor
-nnoremap K :Ag <C-R><C-W><CR>
+nnoremap K :execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>
+" nnoremap K <cmd>Telescope live_grep<C-R><C-W><CR>
 nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
 " command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
@@ -269,9 +272,15 @@ nnoremap \ :Ag<SPACE>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" fzf
-nnoremap <Leader>b :Buffers<CR>
-nmap <Leader>fs :Files<CR>
+" " fzf
+" nnoremap <Leader>b :Buffers<CR>
+" nmap <Leader>fs :Files<CR>
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>fs <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
@@ -336,6 +345,8 @@ map <Leader>a :TestSuite<CR>
 let test#strategy = "neovim"
 let test#neovim#term_position = "20"
 
+let test#ruby#rspec#executable = 'bundle exec rspec'
+
 " Ruby refactory
 nnoremap <leader>rap  :RAddParameter<cr>
 nnoremap <leader>rcpc :RConvertPostConditional<cr>
@@ -396,7 +407,8 @@ inoremap <expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
 inoremap <expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
 
 " github/copilot.vim
-imap <silent> <C-n> <Plug>(copilot-next)
+" imap <silent> <C-n> <Plug>(copilot-next)
+imap <silent> <C-n> <Cmd>call codeium#CycleCompletions(1)<CR>
 
 " " Enable CursorLine
 " set cursorline
@@ -417,6 +429,10 @@ autocmd Filetype html setlocal ts=2 sw=2 expandtab
 " set filetypes as typescript.tsx
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+
+" set Elixir filetypes
+au BufRead,BufNewFile *.eex,*.heex,*.leex,*.sface,*.lexs set filetype=eelixir
+au BufRead,BufNewFile mix.lock set filetype=elixir
 
 " YML filetype
 au! BufNewFile,BufRead *.yaml.envsubst set filetype=yaml

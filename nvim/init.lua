@@ -447,3 +447,24 @@ augroup END
 " vim-mix-format
 let g:mix_format_on_save = 1
 ]])
+
+-- Lazy.vim (package manager) setup setup
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Set mapleader to ","
+vim.g.mapleader = ","
+
+-- Plugins spec
+-- require("lazy").setup({
+-- })

@@ -1,8 +1,14 @@
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
 vim.cmd([[
 "" +------------- PLUGINS ---------------+
 call plug#begin(stdpath('data') . '/plugged')
 
-Plug 'scrooloose/nerdtree'
 Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-commentary'
 Plug 'Raimondi/delimitMate'
@@ -82,13 +88,6 @@ let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
-
-"" NERDTree configuration
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeMinimalUI=1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 
 "" fzf.vim
 set wildmode=list:longest,list:full
@@ -241,10 +240,6 @@ if has('macunix')
 endif
 
 "" +------------- KEYS ---------------+
-
-" Nerdtree
-map <leader>q :NERDTreeToggle<CR>
-map <leader>m :NERDTreeFind<CR>
 
 " Replace without overriding contents of current
 xnoremap <leader>p "_dP
@@ -447,7 +442,6 @@ augroup END
 " vim-mix-format
 let g:mix_format_on_save = 1
 ]])
-
 -- Lazy.vim (package manager) setup setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -465,6 +459,40 @@ vim.opt.rtp:prepend(lazypath)
 -- Set mapleader to ","
 vim.g.mapleader = ","
 
+-- nvim-tree
+local function nvim_tree_on_attach(bufnr)
+  local api = require("nvim-tree.api")
+  local function opts(desc)
+    return {
+      desc = "nvim-tree: " .. desc,
+      buffer = bufnr,
+      noremap = true,
+      silent = true,
+      nowait = true
+    }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  -- custom mappings
+  vim.api.nvim_set_keymap('', '<leader>q', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
+  vim.api.nvim_set_keymap('', '<leader>m', ':NvimTreeFindFile<CR>', {noremap = true, silent = true})
+end
+
 -- Plugins spec
--- require("lazy").setup({
--- })
+require("lazy").setup({
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup {
+        on_attach = nvim_tree_on_attach
+      }
+    end,
+  },
+})

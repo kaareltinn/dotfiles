@@ -32,7 +32,6 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'Exafunction/codeium.vim'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.4' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " HTML
@@ -245,8 +244,6 @@ endif
 xnoremap <leader>p "_dP
 
 " bind K to grep word under cursor
-nnoremap K :execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>
-" nnoremap K <cmd>Telescope live_grep<C-R><C-W><CR>
 nnoremap T :tag "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind \ (backward slash) to grep shortcut
 " command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
@@ -260,12 +257,6 @@ nnoremap N Nzzzv
 " " fzf
 " nnoremap <Leader>b :Buffers<CR>
 " nmap <Leader>fs :Files<CR>
-
-" Find files using Telescope command-line sugar.
-nnoremap <leader>fs <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 "" no one is really happy until you have this shortcuts
 cnoreabbrev W! w!
@@ -461,7 +452,7 @@ local function map(kind, mapping, command, opts)
   if opts then
     options = vim.tbl_extend("force", options, opts)
   end
-  vim.api.nvim_set_keymap(kind, mapping, command, options)
+  vim.keymap.set(kind, mapping, command, options)
 end
 
 -- Set mapleader to ","
@@ -503,4 +494,15 @@ require("lazy").setup({
       }
     end,
   },
+  {
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  }
 })
+
+-- Telescope
+local builtin = require('telescope.builtin')
+map('n', '<leader>ff', builtin.find_files)
+map('n', '<leader>fg', builtin.live_grep)
+map('n', '<leader>fb', builtin.buffers)
+map('n', 'K', ":execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>")

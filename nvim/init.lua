@@ -456,6 +456,14 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function map(kind, mapping, command, opts)
+  local options = { noremap = true, silent = true }
+  if opts then
+    options = vim.tbl_extend("force", options, opts)
+  end
+  vim.api.nvim_set_keymap(kind, mapping, command, options)
+end
+
 -- Set mapleader to ","
 vim.g.mapleader = ","
 
@@ -476,8 +484,8 @@ local function nvim_tree_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 
   -- custom mappings
-  vim.api.nvim_set_keymap('', '<leader>q', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
-  vim.api.nvim_set_keymap('', '<leader>m', ':NvimTreeFindFile<CR>', {noremap = true, silent = true})
+  map('', '<leader>q', ':NvimTreeToggle<CR>')
+  map('', '<leader>m', ':NvimTreeFindFile<CR>')
 end
 
 -- Plugins spec

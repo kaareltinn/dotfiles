@@ -497,12 +497,35 @@ require("lazy").setup({
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.4',
     dependencies = { 'nvim-lua/plenary.nvim' }
+  },
+  {
+    'alexghergh/nvim-tmux-navigation',
+    config = function()
+    end,
   }
 })
 
 -- Telescope
 local builtin = require('telescope.builtin')
-map('n', '<leader>ff', builtin.find_files)
+map('n', '<leader>fs', builtin.find_files)
 map('n', '<leader>fg', builtin.live_grep)
 map('n', '<leader>fb', builtin.buffers)
 map('n', 'K', ":execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>")
+
+-- Moving between windows
+map('', '<C-j>', '<C-w>j')
+map('', '<C-k>', '<C-w>k')
+map('', '<C-l>', '<C-w>l')
+map('', '<C-h>', '<C-w>h')
+
+-- Tmux Navigation
+-- Have to come after regular windows movement
+local nvim_tmux_nav = require('nvim-tmux-navigation')
+nvim_tmux_nav.setup {
+  disable_when_zoomed = true
+}
+
+map('n', '<C-h>', ':NvimTmuxNavigateLeft<CR>')
+map('n', '<C-j>', ':NvimTmuxNavigateDown<CR>')
+map('n', '<C-k>', ':NvimTmuxNavigateUp<CR>')
+map('n', '<C-l>', ':NvimTmuxNavigateRight<CR>')

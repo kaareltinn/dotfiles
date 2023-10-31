@@ -25,7 +25,6 @@ Plug 'joaohkfaria/vim-jest-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'w0rp/ale'
 Plug 'honza/vim-snippets'
-Plug 'tpope/vim-projectionist' " must be after phoenix.vim plugin
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'ryanoasis/vim-devicons'
 Plug 'Exafunction/codeium.vim'
@@ -112,44 +111,6 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-autocmd User ProjectionistDetect
-\ call projectionist#append(getcwd(),
-\ {
-\    'app/*.rb': {
-\      'alternate': 'spec/{}_spec.rb'
-\    },
-\    'spec/*_spec.rb': {
-\      'alternate': ['app/{}.rb', 'app/components/{}.rb']
-\    },
-\    'app/components/*.rb': {
-\      'alternate': 'spec/{dirname}/{basename}_spec.rb'
-\    },
-\    'lib/*.ex': {
-\      'alternate': 'test/{}_test.exs'
-\    },
-\    'test/*_test.exs': {
-\      'alternate': 'lib/{}.ex'
-\    },
-\    'app/*.ts': {
-\      'alternate': 'app/{}.test.js'
-\    },
-\    'app/*.test.js': {
-\      'alternate': 'app/{}.ts'
-\    },
-\    'app/*.js': {
-\      'alternate': 'app/{}.test.js'
-\    },
-\    'app/*.test.jsx': {
-\      'alternate': 'app/{}.tsx'
-\    },
-\    'app/*.tsx': {
-\      'alternate': 'app/{}.test.jsx'
-\    },
-\    'app/*.jsx': {
-\      'alternate': 'app/{}.test.jsx'
-\    },
-\ })
 
 let g:user_emmet_settings = {
 \  'javascript.jsx' : {
@@ -487,6 +448,9 @@ require("lazy").setup({
   {
     'vim-test/vim-test',
   },
+  {
+    'rgroli/other.nvim',
+  },
 })
 
 -- Telescope
@@ -523,3 +487,52 @@ map('n', '<leader>a', ':TestSuite<CR>')
 vim.g['test#strategy'] = 'neovim'
 vim.g['test#neovim#term_position'] = '20'
 vim.g['test#ruby#rspec#executable'] = 'bundle exec rspec'
+
+-- other.vim
+require("other-nvim").setup({
+	mappings = {
+		"rails",
+    {
+      pattern = "spec/(.*)/(.*)_spec.rb$",
+      target = "app/%1/%2.rb"
+    },
+    {
+      pattern = "lib/(.*)/(.*).ex$",
+      target = "test/%1/%2_test.exs"
+    },
+    {
+      pattern = "test/(.*)/(.*)_test.exs$",
+      target = "lib/%1/%2.ex"
+    },
+    {
+      pattern = "app/(.*)/(.*).ts$",
+      target = "app/%1/%2.test.js",
+    },
+    {
+      pattern = "app/(.*)/(.*).test.js$",
+      target = "app/%1/%2.ts",
+    },
+    {
+      pattern = "app/(.*)/(.*).tsx$",
+      target = "app/%1/%2.test.jsx",
+    },
+    {
+      pattern = "app/(.*)/(.*).test.jsx$",
+      target = "app/%1/%2.tsx",
+    },
+    {
+      pattern = "app/(.*)/(.*).jsx$",
+      target = "app/%1/%2.test.jsx",
+    },
+    {
+      pattern = "app/(.*)/(.*).test.jsx$",
+      target = "app/%1/%2.jsx",
+    }
+  }
+})
+
+-- other.vim
+map('n', '<leader>aa', ':Other<CR>')
+map('n', '<leader>ah', ':OtherSplit<CR>')
+map('n', '<leader>av', ':OtherVSplit<CR>')
+map('n', '<leader>at', ':Other test<CR>')

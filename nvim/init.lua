@@ -466,6 +466,9 @@ map('', '<C-k>', '<C-w>k')
 map('', '<C-l>', '<C-w>l')
 map('', '<C-h>', '<C-w>h')
 
+-- Close buffer
+map('', '<leader>d', ':bd!<CR>')
+
 -- Tmux Navigation
 -- Have to come after regular windows movement
 local nvim_tmux_nav = require('nvim-tmux-navigation')

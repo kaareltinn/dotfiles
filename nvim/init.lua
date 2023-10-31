@@ -19,8 +19,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'Yggdroot/indentLine'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'janko-m/vim-test'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'epilande/vim-react-snippets'
 Plug 'joaohkfaria/vim-jest-snippets'
@@ -311,18 +309,6 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-" vim-test mappings
-map <Leader>t :TestFile<CR>
-map <Leader>s :TestNearest<CR>
-map <Leader>l :TestLast<CR>
-map <Leader>a :TestSuite<CR>
-"
-" run test in split window
-let test#strategy = "neovim"
-let test#neovim#term_position = "20"
-
-let test#ruby#rspec#executable = 'bundle exec rspec'
-
 " Ruby refactory
 nnoremap <leader>rap  :RAddParameter<cr>
 nnoremap <leader>rcpc :RConvertPostConditional<cr>
@@ -340,9 +326,6 @@ nnoremap <silent> <C-c> :nohl<CR><C-l>
 if has('nvim')
   tnoremap <Esc> <C-\><C-n>
   tnoremap <C-v><Esc> <Esc>
-
-  " In vim-test 'neovim' strategy press Ctrl-o to go to normal mode and scroll
-  tmap <C-o> <C-\><C-n>
 
   " Moving between terminal and regular windows
   tnoremap <C-h> <C-\><C-n><C-w>h
@@ -500,9 +483,10 @@ require("lazy").setup({
   },
   {
     'alexghergh/nvim-tmux-navigation',
-    config = function()
-    end,
-  }
+  },
+  {
+    'vim-test/vim-test',
+  },
 })
 
 -- Telescope
@@ -529,3 +513,13 @@ map('n', '<C-h>', ':NvimTmuxNavigateLeft<CR>')
 map('n', '<C-j>', ':NvimTmuxNavigateDown<CR>')
 map('n', '<C-k>', ':NvimTmuxNavigateUp<CR>')
 map('n', '<C-l>', ':NvimTmuxNavigateRight<CR>')
+
+-- vim-test
+map('n', '<leader>t', ':TestFile<CR>')
+map('n', '<leader>s', ':TestNearest<CR>')
+map('n', '<leader>l', ':TestLast<CR>')
+map('n', '<leader>a', ':TestSuite<CR>')
+
+vim.g['test#strategy'] = 'neovim'
+vim.g['test#neovim#term_position'] = '20'
+vim.g['test#ruby#rspec#executable'] = 'bundle exec rspec'

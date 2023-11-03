@@ -24,9 +24,28 @@ local function map(kind, mapping, command, opts)
   vim.keymap.set(kind, mapping, command, options)
 end
 
--- Set mapleader to ","
+-- Options
 vim.g.mapleader = ","
 
+vim.opt.number = true
+vim.opt.ruler = true
+
+vim.opt.incsearch = true
+vim.opt.hlsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 0
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
+
+vim.opt.laststatus = 2
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+
+vim.opt.clipboard = "unnamedplus"
 -- nvim-tree
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -212,3 +231,5 @@ map('n', '<leader>av', ':OtherVSplit<CR>')
 map('n', '<leader>at', ':Other test<CR>')
 
 vim.cmd('colorscheme nord')
+vim.g['nord_uniform_status_lines'] = true
+vim.g['nord_uniform_diff_background'] = true

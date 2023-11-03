@@ -46,6 +46,31 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 
 vim.opt.clipboard = "unnamedplus"
+
+-- General remappings
+map('n', 'n', 'nzzzv')
+map('n', 'N', 'Nzzzv')
+
+map('n', '<Tab>', 'gt')
+map('n', '<S-Tab>', 'gT')
+map('n', '<S-t>', ':tabnew<CR>')
+
+map('', '<C-j>', '<C-w>j')
+map('', '<C-k>', '<C-w>k')
+map('', '<C-l>', '<C-w>l')
+map('', '<C-h>', '<C-w>h')
+
+map('', '<leader>d', ':bd!<CR>')
+
+map('v', '<', '<gv')
+map('v', '>', '>gv')
+map('v', 'J', ':m \'>+1<CR>gv=gv')
+map('v', 'K', ':m \'<-2<CR>gv=gv')
+
+map('n', '<C-c>', ':nohl<CR><C-l>')
+
+map('n', '<leader>h', ':<C-u>split<CR>')
+map('n', '<leader>v', ':<C-u>vsplit<CR>')
 -- nvim-tree
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -150,15 +175,6 @@ map('n', '<leader>fg', builtin.live_grep)
 map('n', '<leader>fb', builtin.buffers)
 map('n', 'K', ":execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>")
 
--- Moving between windows
-map('', '<C-j>', '<C-w>j')
-map('', '<C-k>', '<C-w>k')
-map('', '<C-l>', '<C-w>l')
-map('', '<C-h>', '<C-w>h')
-
--- Close buffer
-map('', '<leader>d', ':bd!<CR>')
-
 -- Tmux Navigation
 -- Have to come after regular windows movement
 local nvim_tmux_nav = require('nvim-tmux-navigation')
@@ -230,6 +246,7 @@ map('n', '<leader>ah', ':OtherSplit<CR>')
 map('n', '<leader>av', ':OtherVSplit<CR>')
 map('n', '<leader>at', ':Other test<CR>')
 
+-- nord
 vim.cmd('colorscheme nord')
 vim.g['nord_uniform_status_lines'] = true
 vim.g['nord_uniform_diff_background'] = true

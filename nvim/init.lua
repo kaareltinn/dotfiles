@@ -47,6 +47,9 @@ vim.opt.backup = false
 
 vim.opt.clipboard = "unnamedplus"
 
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
 -- General remappings
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'Nzzzv')
@@ -165,6 +168,15 @@ require("lazy").setup({
   },
   {
     'arcticicestudio/nord-vim'
+  },
+  {
+    'tpope/vim-fugitive'
+  },
+  {
+    'tpope/vim-surround'
+  },
+  {
+    'tpope/vim-commentary'
   }
 })
 
@@ -245,6 +257,11 @@ map('n', '<leader>aa', ':Other<CR>')
 map('n', '<leader>ah', ':OtherSplit<CR>')
 map('n', '<leader>av', ':OtherVSplit<CR>')
 map('n', '<leader>at', ':Other test<CR>')
+
+-- vim-fugitive
+map('', '<leader>gs', ':G<CR>')
+map('', '<leader>gb', ':G blame<CR>')
+map('', '<leader>gd', ':G diff<CR>')
 
 -- nord
 vim.cmd('colorscheme nord')

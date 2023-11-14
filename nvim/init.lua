@@ -50,6 +50,8 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+vim.opt.updatetime = 100
+
 -- General remappings
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'Nzzzv')
@@ -74,6 +76,19 @@ map('n', '<C-c>', ':nohl<CR><C-l>')
 
 map('n', '<leader>h', ':<C-u>split<CR>')
 map('n', '<leader>v', ':<C-u>vsplit<CR>')
+
+-- no one is really happy until you have this shortcuts
+vim.cmd([[
+  cnoreabbrev W! w!
+  cnoreabbrev Q! q!
+  cnoreabbrev Qall! qall!
+  cnoreabbrev Wq wq
+  cnoreabbrev Wa wa
+  cnoreabbrev wQ wq
+  cnoreabbrev WQ wq
+  cnoreabbrev W w
+  cnoreabbrev Q q
+]])
 -- nvim-tree
 local function nvim_tree_on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -177,6 +192,12 @@ require("lazy").setup({
   },
   {
     'tpope/vim-commentary'
+  },
+  {
+    'Raimondi/delimitMate'
+  },
+  {
+    'airblade/vim-gitgutter'
   }
 })
 
@@ -262,6 +283,12 @@ map('n', '<leader>at', ':Other test<CR>')
 map('', '<leader>gs', ':G<CR>')
 map('', '<leader>gb', ':G blame<CR>')
 map('', '<leader>gd', ':G diff<CR>')
+
+-- gitgutter
+map('n', 'ghn', ':GitGutterNextHunk<CR>')
+map('n', 'ghb', ':GitGutterPrevHunk<CR>')
+map('n', 'ghu', ':GitGutterUndoHunk<CR>')
+map('n', 'ghs', ':GitGutterStageHunk<CR>')
 
 -- nord
 vim.cmd('colorscheme nord')

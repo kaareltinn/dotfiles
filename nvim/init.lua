@@ -178,28 +178,78 @@ require("lazy").setup({
         })
     end
   },
-  {
-    'nvim-treesitter/playground'
+  {'nvim-treesitter/playground'},
+  {'arcticicestudio/nord-vim'},
+  {'tpope/vim-fugitive'},
+  {'tpope/vim-surround'},
+  {'tpope/vim-commentary'},
+  {'Raimondi/delimitMate'},
+  {'airblade/vim-gitgutter'},
+  {'williamboman/mason.nvim'},
+  {'williamboman/mason-lspconfig.nvim'},
+  {'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
+  {'neovim/nvim-lspconfig'},
+  {'hrsh7th/cmp-nvim-lsp'},
+  {'hrsh7th/nvim-cmp'},
+  {'L3MON4D3/LuaSnip'},
+  {'honza/vim-snippets'},
+})
+
+-- LSP
+local lsp_zero = require('lsp-zero')
+
+lsp_zero.on_attach(function(client, bufnr)
+  lsp_zero.default_keymaps({buffer = bufnr})
+end)
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'tsserver',
+    'solargraph',
+    'elixirls',
   },
-  {
-    'arcticicestudio/nord-vim'
+  handlers = {
+    lsp_zero.default_setup,
   },
-  {
-    'tpope/vim-fugitive'
+})
+
+local cmp = require('cmp')
+local cmp_action = require('lsp-zero').cmp_action()
+
+cmp.setup({
+  sources = {
+    {name = 'nvim_lsp'},
+    {name = 'luasnip'},
   },
-  {
-    'tpope/vim-surround'
-  },
-  {
-    'tpope/vim-commentary'
-  },
-  {
-    'Raimondi/delimitMate'
-  },
-  {
-    'airblade/vim-gitgutter'
+  mapping = cmp.mapping.preset.insert({
+    -- `Enter` key to confirm completion
+    ['<CR>'] = cmp.mapping.confirm({select = false}),
+
+    -- Ctrl+Space to trigger completion menu
+    ['<C-Space>'] = cmp.mapping.complete(),
+
+    ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
+
+    -- Navigate between snippet placeholder
+    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+
+    -- Scroll up and down in the completion documentation
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+  }),
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end
   }
 })
+
+require("luasnip.loaders.from_snipmate").lazy_load()
+local luasnip = require("luasnip")
+map('i', '<C-l>', luasnip.expand)
 
 -- Telescope
 local builtin = require('telescope.builtin')

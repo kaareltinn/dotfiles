@@ -193,6 +193,7 @@ require("lazy").setup({
   {'hrsh7th/nvim-cmp'},
   {'L3MON4D3/LuaSnip'},
   {'honza/vim-snippets'},
+  {'Exafunction/codeium.vim'},
 })
 
 -- LSP
@@ -200,6 +201,8 @@ local lsp_zero = require('lsp-zero')
 
 lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
+
+  map('n', '<leader>fc', function() vim.lsp.buf.format() end, { buffer = bufnr })
 end)
 
 require('mason').setup({})
@@ -248,6 +251,8 @@ cmp.setup({
 })
 
 require("luasnip.loaders.from_snipmate").lazy_load()
+require("luasnip.loaders.from_snipmate").lazy_load({paths = "~/.config/nvim/mysnippets"})
+
 local luasnip = require("luasnip")
 map('i', '<C-l>', luasnip.expand)
 
@@ -275,6 +280,7 @@ map('n', '<leader>t', ':TestFile<CR>')
 map('n', '<leader>s', ':TestNearest<CR>')
 map('n', '<leader>l', ':TestLast<CR>')
 map('n', '<leader>a', ':TestSuite<CR>')
+map('t', '<C-o>', '<C-\\><C-n>', { noremap = false })
 
 vim.g['test#strategy'] = 'neovim'
 vim.g['test#neovim#term_position'] = '20'

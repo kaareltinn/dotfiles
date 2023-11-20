@@ -1,29 +1,25 @@
 snippet bp
-binding.pry
-endsnippet
+				binding.pry
 
 snippet rrspc
-require 'rails_helper'
+				require 'rails_helper'
 
-RSpec.describe ${1:SomeClass} do
-	let(:company) { create(:company) }
-	let(:company_user) { build_company_user(company) }
+				RSpec.describe ${1:SomeClass} do
+					let(:company) { create(:company) }
+					let(:company_user) { build_company_user(company) }
 
-	describe '' do
-	end
-end
-endsnippet
+					describe '' do
+					end
+				end
 
 snippet nform
-class ${0:SomeClass}
-	inlude NestedForm
+				class ${0:SomeClass}
+					inlude NestedForm
 
-	values do
-		attribute ${1}, ${2}
-	end
-end
-endsnippet
+					values do
+						attribute ${1}, ${2}
+					end
+				end
 
 snippet fatr
-attribute ${0}, ${1}
-endsnippet
+				attribute ${0}, ${1}

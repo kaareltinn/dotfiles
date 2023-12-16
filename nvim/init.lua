@@ -56,22 +56,31 @@ vim.opt.updatetime = 100
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'Nzzzv')
 
+-- Tabs
 map('n', '<Tab>', 'gt')
 map('n', '<S-Tab>', 'gT')
 map('n', '<S-t>', ':tabnew<CR>')
 
+-- Window switching
 map('', '<C-j>', '<C-w>j')
 map('', '<C-k>', '<C-w>k')
 map('', '<C-l>', '<C-w>l')
 map('', '<C-h>', '<C-w>h')
 
+-- Buffer nav
 map('', '<leader>d', ':bd!<CR>')
+map('', '<leader>z', ':bp<CR>')
+map('', '<leader>x', ':bn<CR>')
 
+-- Maintain visual mode after indenting
 map('v', '<', '<gv')
 map('v', '>', '>gv')
+
+-- Move visual block
 map('v', 'J', ':m \'>+1<CR>gv=gv')
 map('v', 'K', ':m \'<-2<CR>gv=gv')
 
+-- <Ctrl-c> redraws the screen and removes any search highlighting.
 map('n', '<C-c>', ':nohl<CR><C-l>')
 
 map('n', '<leader>h', ':<C-u>split<CR>')
@@ -191,9 +200,11 @@ require("lazy").setup({
   {'neovim/nvim-lspconfig'},
   {'hrsh7th/cmp-nvim-lsp'},
   {'hrsh7th/nvim-cmp'},
+  {'hrsh7th/cmp-buffer'},
   {'L3MON4D3/LuaSnip'},
   {'honza/vim-snippets'},
   {'Exafunction/codeium.vim'},
+  {'mhinz/vim-mix-format'},
 })
 
 -- LSP
@@ -203,6 +214,8 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
 
   map('n', '<leader>fc', function() vim.lsp.buf.format() end, { buffer = bufnr })
+  map('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr })
+  map('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr })
 end)
 
 require('mason').setup({})
@@ -224,6 +237,12 @@ cmp.setup({
   sources = {
     {name = 'nvim_lsp'},
     {name = 'luasnip'},
+    {
+      name = 'buffer',
+      option = {
+        keyword_pattern = [[\k\+]],
+      }
+    },
   },
   mapping = cmp.mapping.preset.insert({
     -- `Enter` key to confirm completion
@@ -350,3 +369,6 @@ map('n', 'ghs', ':GitGutterStageHunk<CR>')
 vim.cmd('colorscheme nord')
 vim.g['nord_uniform_status_lines'] = true
 vim.g['nord_uniform_diff_background'] = true
+
+-- vim-mix-format
+vim.g['mix_format_on_save'] = 1

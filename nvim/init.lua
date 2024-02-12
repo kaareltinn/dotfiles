@@ -203,6 +203,7 @@ require("lazy").setup({
   {'hrsh7th/cmp-buffer'},
   {'L3MON4D3/LuaSnip'},
   {'honza/vim-snippets'},
+  {'mattn/emmet-vim'},
   {'Exafunction/codeium.vim'},
   {'mhinz/vim-mix-format'},
 })
@@ -230,6 +231,38 @@ require('mason-lspconfig').setup({
   },
 })
 
+-- LINTERS
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  sources = {
+    -- requires npm install -g eslint_d
+    null_ls.builtins.diagnostics.eslint_d.with({
+      extra_args = { "-c", "eslint.config.mjs" },
+      env = {
+        ESLINT_USE_FLAT_CONFIG = "true",
+      },
+      -- condition = function(utils)
+      --   utils.root_has_file("eslint.config.mjs")
+      -- end
+    }),
+  },
+  on_attach = function(client, bufnr)
+    if client.supports_method("textDocument/formatting") then
+      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup, 
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = bufnr })
+        end,
+      })
+    end
+  end,
+})
+
+-- CMP
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 

@@ -44,9 +44,7 @@ root: ~/eagronom/core
 
 windows:
   - editor: nvim .
-  - terminal: git pull
-  - server: bundle exec rails s
+  - terminal: reload_core
+  - server: RAILS_MAX_THREADS=1 bundle exec rails s
   - webpack: yarn && yarn build && yarn start
-  - guard: bundle exec guard
-  - watch: yarn test --watch
-  - docker: docker-compose up -d postgres redis elasticsearch
+  - docker: docker-compose up -d postgres postgres_land_plots redis elasticsearch

@@ -1,0 +1,15 @@
+# /Users/kaareltinn/.config/tmuxinator/predictor.yml
+
+name: predictor
+root: ~/projects/predictor
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+# Runs after everything. Use it to attach to tmux with custom options etc.
+# post: tmux -CC attach -t predictor
+
+windows:
+  - editor: nvim .
+  - terminal: git pull
+  - server: mix phx.server

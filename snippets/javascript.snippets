@@ -79,6 +79,38 @@ snippet rct "React Component Test"
 					})
 				})
 
+snippet rtlc "React Testing Library Component"
+				import { render, screen } from '@testing-library/react'
+				import React from 'react'
+				import { Provider } from 'react-redux'
+
+				import { mockStore } from 'src/shared/mocks'
+
+				const mockDispatch = jest.fn()
+
+				jest.mock('react-redux', () => ({
+					...jest.requireActual('react-redux'),
+					useDispatch: () => mockDispatch,
+				}))
+
+				describe('<$1 />', () => {
+					given('mockedStore', () => mockStore({
+
+					}))
+
+					given('component', () => (
+						<Provider store={given.mockedStore}>
+							<$1 />
+						</Provider>
+					))
+
+					it('renders', () => {
+						render(given.component)
+
+						expect(screen.getByText('some text')).toBeInTheDocument()
+					})
+				})
+
 snippet rencompsnap "Component snapshot render test"
 				it('renders', () => {
 					expect(given.component).toMatchSnapshot()

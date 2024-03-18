@@ -2,7 +2,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Lazy.vim (package manager) setup setup
+-- Lazy.vim (package manager) setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -51,6 +51,8 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 vim.opt.updatetime = 100
+
+vim.opt.conceallevel = 1
 
 -- General remappings
 map('n', 'n', 'nzzzv')
@@ -180,6 +182,8 @@ require("lazy").setup({
             "json",
             "yaml",
             "embedded_template",
+            "markdown",
+            "markdown_inline",
           },
           sync_install = false,
           highlight = { enable = true, additional_vim_regex_highlighting = true },
@@ -206,6 +210,26 @@ require("lazy").setup({
   {'mattn/emmet-vim'},
   {'Exafunction/codeium.vim'},
   {'mhinz/vim-mix-format'},
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "notes",
+          path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/notes",
+        },
+      },
+    },
+  }
 })
 
 -- LSP

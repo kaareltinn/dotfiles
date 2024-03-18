@@ -425,6 +425,12 @@ map('n', 'ghb', ':GitGutterPrevHunk<CR>')
 map('n', 'ghu', ':GitGutterUndoHunk<CR>')
 map('n', 'ghs', ':GitGutterStageHunk<CR>')
 
+-- obsidian.vim
+map('n', 'obn', ':ObsidianNew<CR>')
+map('n', 'obs', ':ObsidianSearch<CR>')
+map('n', 'obt', ':ObsidianToday<CR>')
+map('n', 'oby', ':ObsidianYesterday<CR>')
+
 -- nord
 vim.cmd('colorscheme nord')
 vim.g['nord_uniform_status_lines'] = true

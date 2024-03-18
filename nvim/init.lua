@@ -306,6 +306,9 @@ require("luasnip.loaders.from_snipmate").lazy_load()
 require("luasnip.loaders.from_snipmate").lazy_load({paths = "~/.config/nvim/mysnippets"})
 
 local luasnip = require("luasnip")
+luasnip.filetype_extend("typescript", {"javascript"})
+luasnip.filetype_extend("javascriptreact", {"javascript"})
+luasnip.filetype_extend("typescriptreact", {"javascript"})
 map('i', '<C-l>', luasnip.expand)
 
 -- Telescope

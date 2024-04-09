@@ -448,10 +448,10 @@ map('n', 'ghu', ':GitGutterUndoHunk<CR>')
 map('n', 'ghs', ':GitGutterStageHunk<CR>')
 
 -- obsidian.vim
-map('n', 'obn', ':ObsidianNew<CR>')
-map('n', 'obs', ':ObsidianSearch<CR>')
-map('n', 'obt', ':ObsidianToday<CR>')
-map('n', 'oby', ':ObsidianYesterday<CR>')
+map('n', '<leader>obn', ':ObsidianNew<CR>')
+map('n', '<leader>obs', ':ObsidianSearch<CR>')
+map('n', '<leader>obt', ':ObsidianToday<CR>')
+map('n', '<leader>oby', ':ObsidianYesterday<CR>')
 
 -- nord
 vim.cmd('colorscheme nord')

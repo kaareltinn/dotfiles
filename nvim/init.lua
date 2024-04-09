@@ -208,8 +208,22 @@ require("lazy").setup({
   {'L3MON4D3/LuaSnip'},
   {'honza/vim-snippets'},
   {'mattn/emmet-vim'},
-  {'Exafunction/codeium.vim'},
+  {
+    "Exafunction/codeium.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+    },
+    config = function()
+        require("codeium").setup({
+        })
+    end
+  },
   {'mhinz/vim-mix-format'},
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
   {
     "epwalsh/obsidian.nvim",
     version = "*",
@@ -294,6 +308,7 @@ cmp.setup({
   sources = {
     {name = 'nvim_lsp'},
     {name = 'luasnip'},
+    {name = 'codeium'},
     {
       name = 'buffer',
       option = {
@@ -341,6 +356,13 @@ map('n', '<leader>fs', builtin.find_files)
 map('n', '<leader>fg', builtin.live_grep)
 map('n', '<leader>fb', builtin.buffers)
 map('n', 'K', ":execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>")
+
+-- Lualine
+require('lualine').setup({
+  options = {
+    theme = 'nord',
+  }
+})
 
 -- Tmux Navigation
 -- Have to come after regular windows movement

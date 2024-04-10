@@ -357,6 +357,13 @@ map('n', '<leader>fg', builtin.live_grep)
 map('n', '<leader>fb', builtin.buffers)
 map('n', 'K', ":execute 'Telescope live_grep default_text=' . expand('<cword>')<cr>")
 
+require('telescope').load_extension 'pomodori'
+
+map('n', '<leader>pt', function()
+  require('telescope').extensions.pomodori.timers()
+end, { desc = "Manage Pomodori timers" })
+
+
 -- Lualine
 require('lualine').setup({
   options = {

@@ -255,6 +255,7 @@ lsp_zero.on_attach(function(client, bufnr)
   map('n', '<leader>fc', function() vim.lsp.buf.format() end, { buffer = bufnr })
   map('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr })
   map('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr })
+  map('n', '<leader>sd', '<cmd>lua vim.diagnostic.open_float()<CR>', { buffer = bufnr })
 end)
 
 require('mason').setup({})

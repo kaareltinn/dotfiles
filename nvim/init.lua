@@ -463,4 +463,6 @@ vim.g['nord_uniform_diff_background'] = true
 -- vim-mix-format
 vim.g['mix_format_on_save'] = 1
 
+-- treesitter highlight overwrites
 vim.api.nvim_set_hl(0, "@module.elixir", { link = "Type"})
+vim.api.nvim_set_hl(0, "@string.special.symbol.ruby", { link = "Identifier"})

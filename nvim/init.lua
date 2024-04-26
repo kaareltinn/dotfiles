@@ -209,14 +209,13 @@ require("lazy").setup({
   {'honza/vim-snippets'},
   {'mattn/emmet-vim'},
   {
-    "Exafunction/codeium.nvim",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        "hrsh7th/nvim-cmp",
-    },
-    config = function()
-        require("codeium").setup({
-        })
+    'Exafunction/codeium.vim',
+    config = function ()
+      vim.g.codeium_manual = true
+      map('i', '<C-i>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
+      map('i', '<C-j>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+      map('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+      map('i', '<C-c>', function() return vim.fn['codeium#Complete']() end, { expr = true, silent = true })
     end
   },
   {'mhinz/vim-mix-format'},

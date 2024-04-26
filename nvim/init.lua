@@ -242,6 +242,18 @@ require("lazy").setup({
         },
       },
     },
+  },
+  {
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "ray-x/guihua.lua",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   }
 })
 
@@ -263,42 +275,25 @@ require('mason-lspconfig').setup({
     'tsserver',
     'solargraph',
     'elixirls',
+    'gopls',
   },
   handlers = {
     lsp_zero.default_setup,
   },
 })
 
--- LINTERS
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-local null_ls = require("null-ls")
 
-null_ls.setup({
-  sources = {
-    -- requires npm install -g eslint_d
-    null_ls.builtins.diagnostics.eslint_d.with({
-      extra_args = { "-c", "eslint.config.mjs" },
-      env = {
-        ESLINT_USE_FLAT_CONFIG = "true",
-      },
-      -- condition = function(utils)
-      --   utils.root_has_file("eslint.config.mjs")
-      -- end
-    }),
-  },
-  on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup, 
-        buffer = bufnr,
-        callback = function()
-          vim.lsp.buf.format({ bufnr = bufnr })
-        end,
-      })
-    end
+-- GO
+local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+   require('go.format').goimports()
   end,
+  group = format_sync_grp,
 })
+
+require('go').setup()
 
 -- CMP
 local cmp = require('cmp')

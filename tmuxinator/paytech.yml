@@ -1,0 +1,8 @@
+# /Users/kaareltinn/.config/tmuxinator/paytech.yml
+
+name: ups-app
+root: ~/work/ups-app
+
+window:
+  - editor: nvim .
+  - terminal: docker compose up -d

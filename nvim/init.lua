@@ -1,6 +1,6 @@
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- Create symlinks in ~/.config/nvim to this file and the rest of the files in this directory:
+-- ln -sv ~/work/dotfiles/nvim/init.lua ~/.config/nvim/init.lua
+-- ln -sv ~/work/dotfiles/nvim/lua ~/.config/nvim/lua
 
 -- Lazy.vim (package manager) setup
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -16,6 +16,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require('config.options')
+
 local function map(kind, mapping, command, opts)
   local options = { noremap = true, silent = true }
   if opts then
@@ -25,35 +27,6 @@ local function map(kind, mapping, command, opts)
 end
 
 -- Options
-vim.g.mapleader = ","
-
-vim.opt.number = true
-vim.opt.ruler = true
-
-vim.opt.incsearch = true
-vim.opt.hlsearch = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 0
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-
-vim.opt.laststatus = 3
-
-vim.opt.swapfile = false
-vim.opt.backup = false
-
-vim.opt.clipboard = "unnamedplus"
-
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-
-vim.opt.updatetime = 100
-
-vim.opt.conceallevel = 1
-
 -- General remappings
 map('n', 'n', 'nzzzv')
 map('n', 'N', 'Nzzzv')

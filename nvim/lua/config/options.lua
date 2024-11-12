@@ -30,3 +30,6 @@ vim.opt.splitright = true
 vim.opt.updatetime = 100
 
 vim.opt.conceallevel = 1
+
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }

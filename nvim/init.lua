@@ -24,6 +24,11 @@ require('mason-lspconfig').setup({
     'elixirls',
     -- 'gopls',
   },
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup({})
+    end,
+  }
 })
 local lspconfig = require("lspconfig")
 

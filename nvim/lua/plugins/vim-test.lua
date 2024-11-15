@@ -1,3 +1,7 @@
+map = require('config.mappings').map
+
+map('t', '<C-o>', [[<C-\><C-n>]])
+
 return {
   'vim-test/vim-test',
   keys = {

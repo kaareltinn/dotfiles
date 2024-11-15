@@ -15,7 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Load plugin specs from lua/plugins/*.lua
 require("lazy").setup("plugins", {
   defaults = {
-    lazy = false, -- Default to lazy loading, optional
+    lazy = true, -- Default to lazy loading, optional
   },
   change_detection = {
     notify = false, -- I find the config changed notification super annoying

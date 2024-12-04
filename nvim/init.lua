@@ -16,12 +16,15 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
   require('cmp_nvim_lsp').default_capabilities()
 )
 
+-- List of mason supported language servers:
+-- https://github.com/williamboman/mason-lspconfig.nvim
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = {
     -- 'tsserver',
     'solargraph',
     'elixirls',
+    'terraformls',
     -- 'gopls',
   },
   handlers = {
@@ -39,6 +42,7 @@ lspconfig.solargraph.setup({
     }
   }
 })
+lspconfig.gleam.setup({})
 
 -- GO
 local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})

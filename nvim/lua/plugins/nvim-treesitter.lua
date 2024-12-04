@@ -1,4 +1,5 @@
 map = require('config.mappings').map
+-- https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#supported-languages
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -15,6 +16,9 @@ return {
           "elixir",
           "eex",
           "heex",
+          "hcl",
+          "terraform",
+          "gleam",
           "ruby",
           "javascript",
           "typescript",

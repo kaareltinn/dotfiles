@@ -21,10 +21,10 @@ return {
             -- https://github.com/olimorris/codecompanion.nvim/blob/main/lua/codecompanion/config.lua
             keymaps = {
               next_header = {
-                modes = { n = "<C-;>", i = "<C-;>" },
+                modes = { n = "<C-:>", i = "<C-:>" },
               },
               previous_header = {
-                modes = { n = "<C-:>", i = "<C-:>" },
+                modes = { n = "<C-;>", i = "<C-;>" },
               }
             }
           },

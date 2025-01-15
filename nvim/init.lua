@@ -25,6 +25,7 @@ require('mason-lspconfig').setup({
     'solargraph',
     'elixirls',
     'terraformls',
+    'jedi_language_server',
     -- 'gopls',
   },
   handlers = {

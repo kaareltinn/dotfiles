@@ -1,40 +1,80 @@
- #!/usr/bin/env bash
+#!/usr/bin/env bash
 
- # Exit if any command fails
- set -e
+# Exit if any command fails
+set -e
 
- pane_dir=$(tmux display-message -p '#{pane_current_path}')
- pane_id=$(tmux display-message -p '#{pane_id}')
- cd "$pane_dir" || exit
- git_root=$(git rev-parse --show-toplevel)
+# Show help text
+show_help() {
+  cat << EOF
+Usage: pick-files [OPTIONS]
 
-# gnu coreutils realpath is needed to make the paths relative to the currently active
-# tmux pane relative to the git repo root, because aider always wants paths relative
-# to the repo root, even if you are in a subdirectory
+Interactive file picker that outputs relative paths from git root.
+Uses fzf for selection and supports multi-select.
+
+Dependencies:
+  - fzf      (brew install fzf)
+  - fd       (brew install fd) 
+  - bat      (brew install bat)
+  - realpath (brew install coreutils)
+
+Options:
+  -h, --help  Show this help message
+EOF
+}
+
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -h|--help) show_help; exit 0 ;;
+    *) echo "Unknown parameter: $1"; show_help; exit 1 ;;
+  esac
+  shift
+done
+
+# Check dependencies
+for cmd in fzf fd bat; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Error: $cmd is not installed. Install with: brew install $cmd" >&2
+    exit 1
+  fi
+done
+
+# Get tmux pane info
+pane_dir=$(tmux display-message -p '#{pane_current_path}')
+pane_id=$(tmux display-message -p '#{pane_id}')
+cd "$pane_dir" || exit
+git_root=$(git rev-parse --show-toplevel)
+
+# Determine realpath command
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	if ! command -v grealpath >/dev/null 2>&1; then
-		echo "grealpath not found. Install with: brew install coreutils" >&2
-		exit 1
-	fi
-	realpath_cmd="grealpath"
+  if ! command -v grealpath >/dev/null 2>&1; then
+    echo "Error: grealpath not found. Install with: brew install coreutils" >&2
+    exit 1
+  fi
+  realpath_cmd="grealpath"
 else
-	realpath_cmd="realpath"
+  if ! command -v realpath >/dev/null 2>&1; then
+    echo "Error: realpath not found. Install realpath/coreutils" >&2
+    exit 1
+  fi
+  realpath_cmd="realpath"
 fi
 
+# Select files with fzf
 selected_files=$(
-	fd --type f |
-		fzf --multi \
-			--reverse \
-			--preview 'bat --style=numbers --color=always {}' |
-		while read -r file; do
-			"$realpath_cmd" --relative-to="$git_root" "$pane_dir/$file"
-		done
+  fd --type f |
+    fzf --multi \
+      --reverse \
+      --preview 'bat --style=numbers --color=always {}' |
+    while read -r file; do
+      "$realpath_cmd" --relative-to="$git_root" "$pane_dir/$file"
+    done
 )
 
 if [ -n "$selected_files" ]; then
-     files_oneline=$(echo "$selected_files" | tr '\n' ' ' | sed 's/ $//')
-     tmux send-keys -t "$pane_id" "$files_oneline"
- else
-     # Wait for user input before closing if no files selected
-     read -p "No files selected. Press enter to exit..."
- fi
+  files_oneline=$(echo "$selected_files" | tr '\n' ' ' | sed 's/ $//')
+  tmux send-keys -t "$pane_id" "$files_oneline"
+else
+  echo "No files were selected"
+  exit 0
+fi

@@ -15,6 +15,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>fc', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
     vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
     vim.keymap.set('n', '<leader>sd', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
+    vim.keymap.set('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+    vim.keymap.set('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
   end,
 })
 
@@ -49,6 +51,12 @@ return {
             require('luasnip').lsp_expand(args.body)
             -- vim.snip.expand(args.body)
           end
+        }
+      })
+      cmp.setup.filetype({ 'sql' }, {
+        sources = {
+          { name = 'vim-dadbod-completion' },
+          { name = 'buffer' },
         }
       })
     end 

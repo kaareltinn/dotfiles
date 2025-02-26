@@ -21,11 +21,12 @@ lspconfig_defaults.capabilities = vim.tbl_deep_extend(
 require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = {
-    -- 'tsserver',
-    'solargraph',
+    'ts_ls',
+    'vls',
+    -- 'solargraph',
     'elixirls',
     'terraformls',
-    'jedi_language_server',
+    'ruff',
     -- 'gopls',
   },
   handlers = {
@@ -56,6 +57,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 require('go').setup()
+
+-- Ruff (Python)
+lspconfig.ruff.setup({})
 
 -- Telescope
 -- note: for some reason couldn't get this work from plugins/telescope.lua

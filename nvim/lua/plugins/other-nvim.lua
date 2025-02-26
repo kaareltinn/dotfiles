@@ -46,7 +46,15 @@ return {
           {
             pattern = "app/(.*)/(.*).test.jsx$",
             target = "app/%1/%2.jsx",
-          }
+          },
+          {
+            pattern = "app/(.*)/(.*).py$",
+            target = "tests/%1/test_%2.py",
+          },
+          {
+            pattern = "tests/(.*)/test_(.*).py$",
+            target = "app/%1/%2.py",
+          },
         }
       })
     end

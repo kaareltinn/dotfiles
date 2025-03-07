@@ -8,6 +8,25 @@ M.map = function(kind, mapping, command, opts)
   vim.keymap.set(kind, mapping, command, options)
 end
 
+
+ -- Function to remove trailing whitespace
+M.remove_trailing_whitespace = function ()
+  -- Save cursor position
+  local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
+  -- Execute the command to remove trailing whitespace
+  vim.cmd([[%s/\s\+$//e]])
+
+  -- Restore cursor position
+  vim.api.nvim_win_set_cursor(0, cursor_pos)
+
+  -- Optional: Show a message
+  vim.notify("Trailing whitespace removed", vim.log.levels.INFO)
+end
+
+-- Example of how to bind it to a key in your init.lua
+-- vim.keymap.set('n', '<leader>w', remove_trailing_whitespace, { noremap = true, desc = "Remove trailing whitespace" })
+
 local map = M.map
 
 M.init = function() 
@@ -44,6 +63,8 @@ M.init = function()
 
   map('n', '<leader>h', ':<C-u>split<CR>')
   map('n', '<leader>v', ':<C-u>vsplit<CR>')
+
+  map('n', '<leader>ww', M.remove_trailing_whitespace, { noremap = true, desc = "Remove trailing whitespace" })
 
   -- no one is really happy until you have this shortcuts
   vim.cmd([[

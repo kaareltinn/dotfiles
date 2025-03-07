@@ -8,6 +8,7 @@ return {
 
       configs.setup({
         ensure_installed = {
+          "python",
           "c",
           "lua",
           "vim",

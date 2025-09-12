@@ -1,5 +1,5 @@
 You are given a project idea. Here is the idea:
-$IDEA
+$ARGUMENTS
 
 - Summon a research subagent to analyse the project and potentially online resources. Try to understand the problem and how it can be solved. Ultrathink.
 - Look at the research subagent's findings and ask clarifying questions if any ambiguities.

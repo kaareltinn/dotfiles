@@ -27,6 +27,8 @@ require('mason-lspconfig').setup({
     'elixirls',
     'terraformls',
     'ruff',
+    'jedi_language_server',
+    -- 'pyright',
     -- 'gopls',
   },
   handlers = {

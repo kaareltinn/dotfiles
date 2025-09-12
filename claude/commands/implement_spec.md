@@ -1,0 +1,65 @@
+# Implement Spec
+
+You are tasked with implementing an approved technical plan from `specs/`. These specs contain phases with specific changes and success criteria.
+
+## Getting Started
+
+When given a spec path:
+- Read the spec completely and check for any existing checkmarks (- [x])
+- Read the original research and all files mentioned in the spec
+- **Read files fully** - never use limit/offset parameters, you need complete context
+- Think deeply about how the pieces fit together
+- Create a todo list to track your progress
+- Start implementing if you understand what needs to be done
+
+If no spec path provided, ask for one.
+
+## Implementation Philosophy
+
+Specs are carefully designed, but reality can be messy. Your job is to:
+- Follow the specs's intent while adapting to what you find
+- Implement each phase fully before moving to the next
+- Verify your work makes sense in the broader codebase context
+- Update checkboxes in the spec as you complete sections
+
+When things don't match the spec exactly, think about why and communicate clearly. The spec is your guide, but your judgment matters too.
+
+If you encounter a mismatch:
+- STOP and think deeply about why the spec can't be followed
+- Present the issue clearly:
+  ```
+  Issue in Phase [N]:
+  Expected: [what the spec says]
+  Found: [actual situation]
+  Why this matters: [explanation]
+
+  How should I proceed?
+  ```
+
+## Verification Approach
+
+After implementing a phase:
+- Run the success criteria checks (usually `make check test` covers everything)
+- Fix any issues before proceeding
+- Update your progress in both the spec and your todos
+- Check off completed items in the spec file itself using Edit
+
+Don't let verification interrupt your flow - batch it at natural stopping points.
+
+## If You Get Stuck
+
+When something isn't working as expected:
+- First, make sure you've read and understood all the relevant code
+- Consider if the codebase has evolved since the spec was written
+- Present the mismatch clearly and ask for guidance
+
+Use sub-tasks sparingly - mainly for targeted debugging or exploring unfamiliar territory.
+
+## Resuming Work
+
+If the spec has existing checkmarks:
+- Trust that completed work is done
+- Pick up from the first unchecked item
+- Verify previous work only if something seems off
+
+Remember: You're implementing a solution, not just checking boxes. Keep the end goal in mind and maintain forward momentum.

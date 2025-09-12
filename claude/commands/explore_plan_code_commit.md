@@ -1,26 +1,29 @@
-Explore, understand, plan, code and commit
+# Explore
+First, use parallel subagents to find and read all files that may be useful for implementing the ticket, either as examples or as edit targets.
+The subagents should return relevant file paths, and any other info that may be useful.
 
-Follow these steps:
+# Plan
+Next, think hard and write up a detailed implementation plan.
 
-## Explore & understand
-1. Search & read codebase for relevant files.
-2. IMPORTANT! Do not write any code yet.
-3. Try to understand the described problem described. Use subagents to verify details and/or investigate particular questions you have during exploration.
+Don't forget to include tests, lookbook components, and documentation. Use your judgement as to what is necessary, given the standards of this repo.
 
-## Plan
-1. $ARGUMENTS about the problem and how to solve it.
-2. Write plan of execution and store it in TODO list to track progress.
+If there are things you are not sure about, use parallel subagents to do some web research. They should only return useful information, no noise.
 
-## Code & commit
-For each TODO checklist item:
-    1. Implement the necessary changes to complete the task
-    2. Write and run tests to verify the fix
-    3. Ensure code passes linting and type checking
-    4. Create a descriptive commit message and commit
+If there are things you still do not understand or questions you have for the user, pause here to ask them before continuing.
 
-## Review
-1. Ask the user for feedback on the changes
-2. If the user approves create a PR (use `user:do_pr_summary` and `gh` command)
+# Code
+When you have a thorough implementation plan, you are ready to start writing code.
+Follow the style of the existing codebase (e.g. we prefer clearly named variables and methods to extensive comments).
+Make sure to run our autoformatting script when you're done, and fix linter warnings that seem reasonable to you.
 
-Here is the problem:
-$PROBLEM
+# Test
+Use parallel subagents to run tests, and make sure they all pass.
+
+If your changes touch the UX in a major way, use the browser to make sure that everything works correctly.
+Make a list of what to test for, and use a subagent for this step.
+
+If your testing shows problems, go back to the planning stage and think ultrahard.
+
+# Write up your work
+When you are happy with your work, write up a short report that could be used as the PR description.
+Include what you set out to do, the choices you made with their brief justification, and any commands you ran in the process that may be useful for future developers to know about.

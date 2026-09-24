@@ -6,4 +6,6 @@ ln -sv ~/dotfiles/snippets/ .config/nvim/mysnippets
 ln -sv ~/dotfiles/.tmux.conf ~/.tmux.conf
 ln -sv ~/dotfiles/claude/CLAUDE.md ~/.claude/CLAUDE.md
 ln -sv ~/dotfiles/claude/commands ~/.claude/commands
+ln -sv ~/dotfiles/claude/scripts ~/.claude/scripts
+ln -sv ~/dotfiles/tmuxinator/ ~/.config/tmuxinator
 ```

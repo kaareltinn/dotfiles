@@ -14,5 +14,6 @@ return {
     vim.g['test#strategy'] = 'neovim'
     vim.g['test#neovim#term_position'] = '20'
     vim.g['test#ruby#rspec#executable'] = 'bundle exec rspec'
+    vim.g['test#python#pytest#executable'] = 'pixi run pytest'
   end,
 }

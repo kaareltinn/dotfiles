@@ -39,7 +39,7 @@ If you encounter a mismatch:
 ## Verification Approach
 
 After implementing a phase:
-- Run the success criteria checks (usually `make check test` covers everything)
+- Run the success criteria checks
 - Fix any issues before proceeding
 - Update your progress in both the spec and your todos
 - Check off completed items in the spec file itself using Edit

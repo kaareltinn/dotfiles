@@ -9,7 +9,7 @@ M.map = function(kind, mapping, command, opts)
 end
 
 
- -- Function to remove trailing whitespace
+-- Function to remove trailing whitespace
 M.remove_trailing_whitespace = function ()
   -- Save cursor position
   local cursor_pos = vim.api.nvim_win_get_cursor(0)
@@ -22,6 +22,23 @@ M.remove_trailing_whitespace = function ()
 
   -- Optional: Show a message
   vim.notify("Trailing whitespace removed", vim.log.levels.INFO)
+end
+
+-- Function to copy relative file path to clipboard
+M.copy_relative_path = function()
+  local relative_path = vim.fn.expand('%')
+  if relative_path == '' then
+    vim.notify("No file in buffer", vim.log.levels.WARN)
+    return
+  end
+  vim.fn.setreg('+', relative_path)
+  vim.notify("Copied to clipboard: " .. relative_path, vim.log.levels.INFO)
+end
+
+M.toggle_inlay_hints = function()
+  local enabled = not vim.lsp.inlay_hint.is_enabled({})
+  vim.lsp.inlay_hint.enable(enabled)
+  vim.notify("Inlay hints: " .. (enabled and " on" or "off"))
 end
 
 -- Example of how to bind it to a key in your init.lua
@@ -50,6 +67,9 @@ M.init = function()
   map('', '<leader>z', ':bp<CR>')
   map('', '<leader>x', ':bn<CR>')
 
+  -- Buffer reloading
+  map('', '<leader>rr', ':e!<CR>')
+
   -- Maintain visual mode after indenting
   map('v', '<', '<gv')
   map('v', '>', '>gv')
@@ -65,6 +85,8 @@ M.init = function()
   map('n', '<leader>v', ':<C-u>vsplit<CR>')
 
   map('n', '<leader>ww', M.remove_trailing_whitespace, { noremap = true, desc = "Remove trailing whitespace" })
+  map('n', '<leader>cp', M.copy_relative_path, { noremap = true, desc = "Copy relative file path to clipboard" })
+  map('n', '<leader>ih', M.toggle_inlay_hints, { noremap = true, desc = "Toggle inlay hints" })
 
   -- no one is really happy until you have this shortcuts
   vim.cmd([[

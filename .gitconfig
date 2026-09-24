@@ -20,9 +20,12 @@
   untracked = ls-files --others --exclude-standard
   edit-modified = "!f() { git ls-files --modified --exclude-standard | sort -u ;  }; nvim `f`"
   fix = commit --amend --no-edit
-	plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
+  plog = log --graph --pretty=format:'%h -%d %s %n' --abbrev-commit --date=relative --branches
   blast = "branch --sort=comitterdate"
   recent-branches="for-each-ref --sort=-committerdate --count=10 --format='%(refname:short)' refs/heads/"
+  wta = '!f() { git worktree add -b "$1" "../$1"; }; f'
+  wtr = '!f() { git worktree remove "../$1"; }; f'
+  wtl = '!f() { git worktree list; }; f'
 [pull]
   # rebase = true
 

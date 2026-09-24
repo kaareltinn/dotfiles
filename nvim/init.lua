@@ -5,16 +5,14 @@
 require('config.options')
 require('config.mappings').init()
 map = require('config.mappings').map
+require('custom.hotreload')
 require('config.lazy')
 
--- Add cmp_nvim_lsp capabilities settings to lspconfig
+-- Add cmp_nvim_lsp capabilities settings to all LSP servers
 -- This should be executed before you configure any language server
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
+vim.lsp.config('*', {
+  capabilities = require('cmp_nvim_lsp').default_capabilities()
+})
 
 -- List of mason supported language servers:
 -- https://github.com/williamboman/mason-lspconfig.nvim
@@ -22,62 +20,49 @@ require('mason').setup({})
 require('mason-lspconfig').setup({
   ensure_installed = {
     'ts_ls',
-    'volar',
+    'vue_ls',
     -- 'solargraph',
     'elixirls',
     'terraformls',
     'ruff',
-    'jedi_language_server',
+    'ty'
+    -- 'jedi_language_server',
     -- 'pyright',
     -- 'gopls',
   },
-  handlers = {
-    function(server_name)
-      require('lspconfig')[server_name].setup({})
-    end,
-    volar = function()
-      require('lspconfig').volar.setup({})
-    end,
-    ts_ls = function()
-      local vue_typescript_plugin = require('mason-registry')
-        .get_package('vue-language-server')
-        :get_install_path()
-        .. '/node_modules/@vue/language-server'
-        .. '/node_modules/@vue/typescript-plugin'
-
-      require('lspconfig').ts_ls.setup({
-        init_options = {
-          plugins = {
-            {
-              name = "@vue/typescript-plugin",
-              location = vue_typescript_plugin,
-              languages = {'javascript', 'typescript', 'vue'}
-            },
-          }
-        },
-        filetypes = {
-          'javascript',
-          'javascriptreact',
-          'javascript.jsx',
-          'typescript',
-          'typescriptreact',
-          'typescript.tsx',
-          'vue',
-        },
-      })
-    end,
-  }
+  automatic_enable = true,
 })
-local lspconfig = require("lspconfig")
 
-lspconfig.solargraph.setup({
+-- Ensure 'vue-language-server' is installed via Mason (e.g. add "volar" above)
+-- Then, manually locate the Volar plugin path:
+local vue_ls_path = vim.fn.expand("$MASON/packages/vue-language-server")
+local vue_plugin_path = vue_ls_path .. "/node_modules/@vue/language-server"
+
+-- Now configure ts_ls (TypeScript) to load the Vue plugin
+vim.lsp.config('ts_ls', {
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = vue_plugin_path,
+        languages = { "vue" },
+      },
+    },
+  },
+  filetypes = { "typescript", "javascript", "vue" },
+})
+
+-- Customize Solargraph for Ruby (nvim-lspconfig provides base config)
+vim.lsp.config('solargraph', {
   settings = {
     solargraph = {
       diagnostics = true
     }
   }
 })
-lspconfig.gleam.setup({})
+
+-- All other servers (elixirls, terraformls, jedi_language_server, ruff, gleam)
+-- are automatically configured by nvim-lspconfig and enabled by mason-lspconfig
 
 -- GO
 local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
@@ -90,9 +75,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 require('go').setup()
-
--- Ruff (Python)
-lspconfig.ruff.setup({})
 
 -- Telescope
 -- note: for some reason couldn't get this work from plugins/telescope.lua

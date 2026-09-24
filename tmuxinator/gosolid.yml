@@ -1,0 +1,9 @@
+name: gosolid
+root: ~/projects/soldera/gosolid
+
+windows:
+  - editor: nvim .
+  - terminal: git pull
+  - server: pixi run start
+  - vite: cd client && yarn && yarn serve
+  - docker: docker compose up -d postgres celery_beat celery_worker rabbitmq

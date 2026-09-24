@@ -7,7 +7,7 @@ return {
         vim.opt_local.winbar = "%{%v:lua.require'jsonpath'.get()%}"
       end
 
-      vim.keymap.set("n", "y<C-p>", function()
+      vim.keymap.set("n", "<leader>jp", function()
         vim.fn.setreg("+", require("jsonpath").get())
       end, { desc = "copy json path", buffer = true })
     end
